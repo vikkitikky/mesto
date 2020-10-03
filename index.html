@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./vendor/normalize.css">
+    <link rel="stylesheet" href="./pages/index.css">
+    <title>MestoRussia</title>
+  </head>
+  <body class="page">
+
+    <header class="header">
+      <div href="#" class="header__container">
+        <img src="image/logo.svg" class="header__logo">
+      </div>
+      </header>
+
+    <main class="content">
+
+      <section class="profile">
+        <img class="profile__avatar" src="./image/avatar.jpg" alt="Аватар">
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <p class="profile__about">Исследователь океана</p>
+          <button type="button" class="profile__edit-btn"></button>
+        </div>
+        <button type="button" class="add-btn"></button>
+      </section>
+
+      <section class="photo">
+        <ul class="elements">
+          <li class="elements__item">
+            <img class="elements__img" src="./image/msk.jpg" alt="#">
+            <h2 class="elements__title">Москва</h2>
+            <button type="button" class="elements__like-btn"></button>
+          </li>
+          <li class="elements__item">
+            <img class="elements__img" src="./image/dombai.jpg" alt="#">
+            <h2 class="elements__title">Домбай</h2>
+            <button type="button" class="elements__like-btn"></button>
+          </li>
+          <li class="elements__item">
+            <img class="elements__img" src="./image/spb-kz.jpg" alt="#">
+            <h2 class="elements__title">Санкт-Петербург, Казанский</h2>
+            <button type="button" class="elements__like-btn"></button>
+          </li>
+          <li class="elements__item">
+            <img class="elements__img" src="./image/spb.jpg" alt="#">
+            <h2 class="elements__title">Санкт-Петербург</h2>
+            <button type="button" class="elements__like-btn"></button>
+          </li>
+          <li class="elements__item">
+            <img class="elements__img" src="./image/kazan.jpg" alt="#">
+            <h2 class="elements__title">Казань</h2>
+            <button type="button" class="elements__like-btn"></button>
+          </li>
+          <li class="elements__item">
+            <img class="elements__img" src="./image/elbrus.png" alt="#">
+            <h2 class="elements__title">Эльбрус</h2>
+            <button type="button" class="elements__like-btn"></button>
+          </li>
+        </ul>
+      </section>
+
+      <section class="popup popup_hidden">
+        <form class="popup__container">
+          <button type="reset" class="popup__close-btn"></button>
+          <h3 class="popup__title">Редактировать профиль</h3>
+          <input class="popup__input popup__input_field_name" placeholder="Имя" required maxlength="40">
+          <input class="popup__input popup__input_field_job" placeholder="О себе" required maxlength="40">
+          <button type="submit" class="submit-btn">Сохранить</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

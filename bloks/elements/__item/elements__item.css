@@ -1,0 +1,7 @@
+.elements__item {
+  display: grid;
+  grid-template: repeat(2, max-content)/repeat(5, 1fr);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
