@@ -1,6 +1,6 @@
 # Проект 4: Место
 
-## [Ссылка на проект][https://vikkitikky.github.io/mesto/index.html]
+## [Ссылка на проект](https://vikkitikky.github.io/mesto/index.html)
 
 ### Технологии
 В проекте использованы grid и flexbox. Основная точка для медиазапросов - 665px. Исключение - элемент header__logo. 
