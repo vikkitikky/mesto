@@ -1,7 +1,9 @@
-.elements__img {
-  width: 282px;
-  height: 282px;
-  object-fit: cover;
+.element__img {
   grid-row: 1/2;
   grid-column: 1/6;
+  width: 282px;
+  max-height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  align-self: center;
 }

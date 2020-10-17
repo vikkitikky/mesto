@@ -1,4 +1,4 @@
-.elements__like-btn {
+.element__like-btn {
   grid-row: 2/3;
   grid-column: 5/6;
   background-color: transparent;
@@ -10,7 +10,9 @@
   border: none;
 }
 
-.elements__like-btn:hover {
+.element__like-btn:hover {
   opacity: .6;
   cursor: pointer;
 }
+
+

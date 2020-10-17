@@ -14,3 +14,10 @@
   background-color: rgba(0, 0, 0, .8);
   cursor: pointer;
 }
+
+@media screen and (max-width: 665px) {
+  .submit-btn {
+  font-size: 14px;
+  line-height: 17px;
+  }
+}

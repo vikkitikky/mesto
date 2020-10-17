@@ -3,72 +3,69 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./vendor/normalize.css">
     <link rel="stylesheet" href="./pages/index.css">
     <title>MestoRussia</title>
   </head>
   <body class="page">
 
     <header class="header">
-      <div class="header__container">
-        <img src="image/logo.svg" class="header__logo" alt="MestoRussia">
-      </div>
-      </header>
+      <img src="image/logo.svg" class="header__logo" alt="MestoRussia">
+    </header>
 
     <main class="content">
 
       <section class="profile">
         <img class="profile__avatar" src="./image/avatar.jpg" alt="Аватар">
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <p class="profile__about">Исследователь океана</p>
+          <div class="profile__main">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <p class="profile__about">Исследователь океана</p>
+          </div>
           <button type="button" class="profile__edit-btn"></button>
         </div>
-        <button type="button" class="add-btn"></button>
+        <button type="button" class="profile__add-btn"></button>
       </section>
 
       <section class="photo">
-        <ul class="elements">
-          <li class="elements__item">
-            <img class="elements__img" src="./image/msk.jpg" alt="#">
-            <h2 class="elements__title">Москва</h2>
-            <button type="button" class="elements__like-btn"></button>
-          </li>
-          <li class="elements__item">
-            <img class="elements__img" src="./image/dombai.jpg" alt="#">
-            <h2 class="elements__title">Домбай</h2>
-            <button type="button" class="elements__like-btn"></button>
-          </li>
-          <li class="elements__item">
-            <img class="elements__img" src="./image/spb-kz.jpg" alt="#">
-            <h2 class="elements__title">Санкт-Петербург, Казанский</h2>
-            <button type="button" class="elements__like-btn"></button>
-          </li>
-          <li class="elements__item">
-            <img class="elements__img" src="./image/spb.jpg" alt="#">
-            <h2 class="elements__title">Санкт-Петербург</h2>
-            <button type="button" class="elements__like-btn"></button>
-          </li>
-          <li class="elements__item">
-            <img class="elements__img" src="./image/kazan.jpg" alt="#">
-            <h2 class="elements__title">Казань</h2>
-            <button type="button" class="elements__like-btn"></button>
-          </li>
-          <li class="elements__item">
-            <img class="elements__img" src="./image/elbrus.png" alt="#">
-            <h2 class="elements__title">Эльбрус</h2>
-            <button type="button" class="elements__like-btn"></button>
-          </li>
-        </ul>
+        <article class="element">
+          <img class="element__img" src="./image/msk.jpg" alt="Москва">
+          <h2 class="element__title">Москва</h2>
+          <button type="button" class="element__like-btn"></button>
+        </article>
+        <article class="element">
+          <img class="element__img" src="./image/dombai.jpg" alt="Домбай">
+          <h2 class="element__title">Домбай</h2>
+          <button type="button" class="element__like-btn"></button>
+        </article>
+        <article class="element">
+          <img class="element__img" src="./image/spb-kz.jpg" alt="Санкт-Петербург, Казанский">
+          <h2 class="element__title">Санкт-Петербург, Казанский</h2>
+          <button type="button" class="element__like-btn"></button>
+        </article>
+        <article class="element">
+          <img class="element__img" src="./image/spb.jpg" alt="Санкт-Петербург">
+          <h2 class="element__title">Санкт-Петербург</h2>
+          <button type="button" class="element__like-btn"></button>
+        </article>
+        <article class="element">
+          <img class="element__img" src="./image/kazan.jpg" alt="Казань">
+          <h2 class="element__title">Казань</h2>
+          <button type="button" class="element__like-btn"></button>
+        </article>
+        <article class="element">
+          <img class="element__img" src="./image/elbrus.png" alt="Эльбрус">
+          <h2 class="element__title">Эльбрус</h2>
+          <button type="button" class="element__like-btn"></button>
+        </article>
       </section>
 
-      <section class="popup popup_hidden">
-        <form class="popup__container">
+      <section class="popup">
+        <form class="popup__container" name="profile-edit-form">
           <button type="reset" class="popup__close-btn"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <input class="popup__input popup__input_field_name" placeholder="Имя" required maxlength="40">
-          <input class="popup__input popup__input_field_job" placeholder="О себе" required maxlength="40">
-          <button type="submit" class="submit-btn">Сохранить</button>
+          <input name="name" class="popup__input popup__input_field_name" placeholder="Имя" required maxlength="40">
+          <input name="job" class="popup__input popup__input_field_job" placeholder="О себе" required maxlength="40">
+          <button type="popup__submit" class="submit-btn">Сохранить</button>
         </form>
       </section>
     </main>

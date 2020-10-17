@@ -7,22 +7,24 @@ let jobInput = form.querySelector('.popup__input_field_job');
 let userName = document.querySelector('.profile__name');
 let userJob = document.querySelector('.profile__about');
 
-nameInput.value = userName.textContent;
-jobInput.value = userJob.textContent;
 
 function formVisibility() {
-  formContainer.classList.toggle('popup_hidden');
+  formContainer.classList.add('popup_visible');
   nameInput.value = userName.textContent;
   jobInput.value = userJob.textContent;
+}
+
+function formHidden() {
+  formContainer.classList.remove('popup_visible');
 }
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
     userName.textContent = nameInput.value;
     userJob.textContent = jobInput.value;
-    formContainer.classList.add('popup_hidden');
+    formHidden();
 }
 
 editBtn.addEventListener('click', formVisibility);
-closeBtn.addEventListener('click', formVisibility);
+closeBtn.addEventListener('click', formHidden);
 form.addEventListener('submit', formSubmitHandler);
