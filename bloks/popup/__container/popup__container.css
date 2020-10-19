@@ -2,7 +2,6 @@
   background-color: #ffffff;
   width: 100%;
   max-width: 430px;
-  height: 330px;
   position: relative;
   border-radius: 10px;
   padding: 36px;
@@ -16,6 +15,5 @@
   .popup__container {
     padding: 25px 22px;
     max-width: 282px;
-    height: 322px;
   }
 }

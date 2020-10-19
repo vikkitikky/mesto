@@ -23,6 +23,7 @@
 @import url(../bloks/popup/__close-btn/popup__close-btn.css);
 @import url(../bloks/popup/__title/popup__title.css);
 @import url(../bloks/popup/__input/popup__input.css);
+@import url(../bloks/popup/__input/_field_name/popup__input_field_name.css);
 @import url(../bloks/submit-btn/submit-btn.css);
 @import url(../bloks/footer/footer.css);
 @import url(../bloks/footer/__copyright/footer__copyright.css);
