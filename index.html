@@ -61,7 +61,7 @@
 
       <section class="popup">
         <form class="popup__container" name="profile-edit-form">
-          <button type="reset" class="popup__close-btn"></button>
+          <button type="reset" class="popup__close-btn"></button> <!--вынести close-btn отдельным блоком?-->
           <h3 class="popup__title">Редактировать профиль</h3>
           <input name="name" class="popup__input popup__input_field_name" placeholder="Имя" required maxlength="40">
           <input name="job" class="popup__input popup__input_field_job" placeholder="О себе" required maxlength="40">
@@ -73,6 +73,15 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
+
+    <template id="photo-template">
+      <article class="element">
+        <img class="element__img">
+        <h2 class="element__title"></h2>
+        <button type="button" class="element__like-btn"></button>
+      </article>
+    </template>
+
     <script src="./scripts/script.js"></script>
   </body>
 </html>
