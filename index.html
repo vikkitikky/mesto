@@ -29,46 +29,63 @@
       <section class="photo">
         <article class="element">
           <img class="element__img" src="./image/msk.jpg" alt="Москва">
+          <button type="button" class="element__delete-btn"></button>
           <h2 class="element__title">Москва</h2>
           <button type="button" class="element__like-btn"></button>
         </article>
         <article class="element">
           <img class="element__img" src="./image/dombai.jpg" alt="Домбай">
+          <button type="button" class="element__delete-btn"></button>
           <h2 class="element__title">Домбай</h2>
           <button type="button" class="element__like-btn"></button>
         </article>
         <article class="element">
           <img class="element__img" src="./image/spb-kz.jpg" alt="Санкт-Петербург, Казанский">
+          <button type="button" class="element__delete-btn"></button>
           <h2 class="element__title">Санкт-Петербург, Казанский</h2>
           <button type="button" class="element__like-btn"></button>
         </article>
         <article class="element">
           <img class="element__img" src="./image/spb.jpg" alt="Санкт-Петербург">
+          <button type="button" class="element__delete-btn"></button>
           <h2 class="element__title">Санкт-Петербург</h2>
           <button type="button" class="element__like-btn"></button>
         </article>
         <article class="element">
           <img class="element__img" src="./image/kazan.jpg" alt="Казань">
+          <button type="button" class="element__delete-btn"></button>
           <h2 class="element__title">Казань</h2>
           <button type="button" class="element__like-btn"></button>
         </article>
         <article class="element">
           <img class="element__img" src="./image/elbrus.png" alt="Эльбрус">
+          <button type="button" class="element__delete-btn"></button>
           <h2 class="element__title">Эльбрус</h2>
           <button type="button" class="element__like-btn"></button>
         </article>
       </section>
 
-      <section class="popup">
-        <form class="popup__container" name="profile-edit-form">
-          <button type="reset" class="popup__close-btn"></button> <!--вынести close-btn отдельным блоком?-->
+
+      <section class="popup popup_type_edit-profile">
+        <form class="popup__form popup__form_type_edit">
+          <button type="reset" class="popup__close-btn popup__close-btn_edit-form"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <input name="name" class="popup__input popup__input_field_name" placeholder="Имя" required maxlength="40">
-          <input name="job" class="popup__input popup__input_field_job" placeholder="О себе" required maxlength="40">
-          <button type="submit" class="submit-btn">Сохранить</button>
+          <input name="name" class="popup__input popup__input_type_name" placeholder="Имя" required maxlength="40">
+          <input name="job" class="popup__input popup__input_type_job" placeholder="О себе" required maxlength="40">
+          <button type="submit" class="popup__submit-btn popup__submit-btn_type_edit-form">Сохранить</button>
         </form>
       </section>
-    </main>
+    
+      <section class="popup popup_type_add-img">
+          <form class="popup__form popup__form_type_add">
+              <button type="reset" class="popup__close-btn popup__close-btn_add-form"></button>
+              <h3 class="popup__title">Новое место</h3>
+              <input name="title" class="popup__input popup__input_type_title" placeholder="Название" required minlength="1">
+              <input name="src" class="popup__input popup__input_type_src" placeholder="Ссылка на картинку" required minlength="1"> 
+              <button type="submit" class="popup__submit-btn popup__submit-btn_type_add-form">Создать</button>
+          </form>
+      </section>
+  </main>
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -77,6 +94,7 @@
     <template id="photo-template">
       <article class="element">
         <img class="element__img">
+        <button type="button" class="element__delete-btn"></button>
         <h2 class="element__title"></h2>
         <button type="button" class="element__like-btn"></button>
       </article>
