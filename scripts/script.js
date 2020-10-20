@@ -1,4 +1,4 @@
-let formContainer = document.querySelector('.popup');
+
 //let form = formContainer.querySelector('.popup__container');
 //let editBtn = document.querySelector('.profile__edit-btn');
 //let closeBtn = form.querySelector('.popup__close-btn');
@@ -56,7 +56,7 @@ const initialCards = [
       name: 'Байкал',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-]; 
+];
 
 const photoContainer = document.querySelector('.photo');
 
@@ -67,8 +67,20 @@ function addCard(name, link) {
   cardElement.querySelector('.element__title').textContent = name;
   cardElement.querySelector('.element__img').src = link;
   cardElement.querySelector('.element__img').alt = name;
-  photoContainer.prepend(cardElement);
+
+  //активация кнопки like
+  cardElement.querySelector('.element__like-btn').addEventListener('click', (evt) => evt.target.classList.toggle('element__like-btn_active'));
+  const deleteBtn = cardElement.querySelector('.element__delete-btn');
+  deleteBtn.addEventListener('click', function() {
+    nowElement = deleteBtn.closest('.element');
+    nowElement.remove();
+  })
+
+  photoContainer.prepend(cardElement);//добавляем карточку в начало секции
 }
+
+
+
 
 initialCards.forEach(item => addCard(item.name, item.link))
 
@@ -121,4 +133,7 @@ function addFormSubmitHandler(evt) {
   modifyPopup(addForm);
 }
 
-addForm.addEventListener('submit', addFormSubmitHandler);
+const addBtn = addForm.querySelector('.popup__submit-btn_type_add-form')
+addBtn.addEventListener('click', addFormSubmitHandler);
+
+

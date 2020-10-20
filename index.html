@@ -27,42 +27,7 @@
       </section>
 
       <section class="photo">
-        <article class="element">
-          <img class="element__img" src="./image/msk.jpg" alt="Москва">
-          <button type="button" class="element__delete-btn"></button>
-          <h2 class="element__title">Москва</h2>
-          <button type="button" class="element__like-btn"></button>
-        </article>
-        <article class="element">
-          <img class="element__img" src="./image/dombai.jpg" alt="Домбай">
-          <button type="button" class="element__delete-btn"></button>
-          <h2 class="element__title">Домбай</h2>
-          <button type="button" class="element__like-btn"></button>
-        </article>
-        <article class="element">
-          <img class="element__img" src="./image/spb-kz.jpg" alt="Санкт-Петербург, Казанский">
-          <button type="button" class="element__delete-btn"></button>
-          <h2 class="element__title">Санкт-Петербург, Казанский</h2>
-          <button type="button" class="element__like-btn"></button>
-        </article>
-        <article class="element">
-          <img class="element__img" src="./image/spb.jpg" alt="Санкт-Петербург">
-          <button type="button" class="element__delete-btn"></button>
-          <h2 class="element__title">Санкт-Петербург</h2>
-          <button type="button" class="element__like-btn"></button>
-        </article>
-        <article class="element">
-          <img class="element__img" src="./image/kazan.jpg" alt="Казань">
-          <button type="button" class="element__delete-btn"></button>
-          <h2 class="element__title">Казань</h2>
-          <button type="button" class="element__like-btn"></button>
-        </article>
-        <article class="element">
-          <img class="element__img" src="./image/elbrus.png" alt="Эльбрус">
-          <button type="button" class="element__delete-btn"></button>
-          <h2 class="element__title">Эльбрус</h2>
-          <button type="button" class="element__like-btn"></button>
-        </article>
+
       </section>
 
 
@@ -75,15 +40,23 @@
           <button type="submit" class="popup__submit-btn popup__submit-btn_type_edit-form">Сохранить</button>
         </form>
       </section>
-    
+
       <section class="popup popup_type_add-img">
           <form class="popup__form popup__form_type_add">
               <button type="reset" class="popup__close-btn popup__close-btn_add-form"></button>
               <h3 class="popup__title">Новое место</h3>
               <input name="title" class="popup__input popup__input_type_title" placeholder="Название" required minlength="1">
-              <input name="src" class="popup__input popup__input_type_src" placeholder="Ссылка на картинку" required minlength="1"> 
+              <input name="src" class="popup__input popup__input_type_src" placeholder="Ссылка на картинку" required minlength="1">
               <button type="submit" class="popup__submit-btn popup__submit-btn_type_add-form">Создать</button>
           </form>
+      </section>
+
+      <section class="popup popup_type_card-view">
+        <div class="popup__card-view">
+        <button class="popup__close-btn popup__close-btn_card-view"></button>
+          <img class="popup__image">
+          <h3 class="popup__card-title"></h3>
+        </div>
       </section>
   </main>
 
@@ -100,6 +73,6 @@
       </article>
     </template>
 
-    <script src="./scripts/script.js"></script>
+    <script src="./scripts/script-1.js"></script>
   </body>
 </html>
