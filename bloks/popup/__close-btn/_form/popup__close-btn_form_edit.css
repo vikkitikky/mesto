@@ -1,0 +1,15 @@
+.popup__close-btn_form_edit {
+  position: absolute;
+  top: -41px;
+  right: -41px;
+}
+
+@media screen and (max-width: 665px) {
+  .popup__close-btn_form_edit {
+    width: 36px;
+    height: 36px;
+    top: -40px;
+    right: 0;
+    background-size: 26px 26px;
+  }
+}

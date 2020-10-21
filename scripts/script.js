@@ -1,36 +1,3 @@
-
-//let form = formContainer.querySelector('.popup__container');
-//let editBtn = document.querySelector('.profile__edit-btn');
-//let closeBtn = form.querySelector('.popup__close-btn');
-//let nameInput = form.querySelector('.popup__input_field_name');
-//let jobInput = form.querySelector('.popup__input_field_job');
-//let userName = document.querySelector('.profile__name');
-//let userJob = document.querySelector('.profile__about');
-//
-//
-//function formVisibility() {
-//  formContainer.classList.add('popup_visible');
-//  nameInput.value = userName.textContent;
-//  jobInput.value = userJob.textContent;
-//}
-//
-//function formHidden() {
-//  formContainer.classList.remove('popup_visible');
-//}
-//
-//function formSubmitHandler (evt) {
-//  evt.preventDefault();
-//    userName.textContent = nameInput.value;
-//    userJob.textContent = jobInput.value;
-//    formHidden();
-//}
-//
-//editBtn.addEventListener('click', formVisibility);
-//closeBtn.addEventListener('click', formHidden);
-//form.addEventListener('submit', formSubmitHandler);
-//
-//карточки из коробки
-
 const initialCards = [
   {
       name: 'Архыз',
@@ -58,72 +25,79 @@ const initialCards = [
   }
 ];
 
-const photoContainer = document.querySelector('.photo');
+const popupCardView = document.querySelector('.popup_type_card-view');
+const addForm = document.querySelector('.popup_type_add-img');
+const editForm = document.querySelector('.popup_type_edit-profile');
+
+const addButton = document.querySelector('.profile__add-btn');
+const editBtn = document.querySelector('.profile__edit-btn');
+
+const closeAddBtn = addForm.querySelector('.popup__close-btn');
+const closeEditBtn = editForm.querySelector('.popup__close-btn');
+const closeImageBtn = popupCardView.querySelector('.popup__close-btn');
+
+const nameValue = document.querySelector('.profile__name');
+const jobValue = document.querySelector('.profile__about');
+
+const nameInput = editForm.querySelector('.popup__input_type_name');
+const jobInput = editForm.querySelector('.popup__input_type_job');
 
 function addCard(name, link) {
+  const photoContainer = document.querySelector('.photo');
   const cardTemlplate = document.querySelector('#photo-template').content;
   const cardElement = cardTemlplate.cloneNode(true);
+  const cardTitle = cardElement.querySelector('.element__title');
+  const cardImage = cardElement.querySelector('.element__img');
 
-  cardElement.querySelector('.element__title').textContent = name;
-  cardElement.querySelector('.element__img').src = link;
-  cardElement.querySelector('.element__img').alt = name;
+  cardTitle.textContent = name;
+  cardImage.src = link;
+  cardImage.alt = name;
 
-  //активация кнопки like
-  cardElement.querySelector('.element__like-btn').addEventListener('click', (evt) => evt.target.classList.toggle('element__like-btn_active'));
   const deleteBtn = cardElement.querySelector('.element__delete-btn');
-  deleteBtn.addEventListener('click', function() {
-    nowElement = deleteBtn.closest('.element');
-    nowElement.remove();
-  })
+  deleteBtn.addEventListener('click', (evt) => deleteCardItem(evt.target));
 
-  photoContainer.prepend(cardElement);//добавляем карточку в начало секции
+  const likeBtn = cardElement.querySelector('.element__like-btn');
+  likeBtn.addEventListener('click', (evt) => likeCard(evt.target));
+
+  cardImage.addEventListener('click', (evt) => bigImage(evt.target));
+
+  photoContainer.prepend(cardElement);
 }
 
+function deleteCardItem(button) {
+  const currentCard = button.closest('.element');
+  currentCard.remove();
+}
 
-
-
-initialCards.forEach(item => addCard(item.name, item.link))
+function likeCard(button) {
+  button.classList.toggle('element__like-btn_active');
+}
 
 function modifyPopup(form) {
   form.classList.toggle('popup_visible');
 }
 
-const addButton = document.querySelector('.profile__add-btn'); //нашли кнопку добавления картинки
-const addForm = document.querySelector('.popup_type_add-img');//нашли попап с формой добавления
-const closeAddBtn = document.querySelector('.popup__close-btn_add-form');//нашли закрывающую форму добавления кнопку
-addButton.addEventListener('click', () => modifyPopup(addForm));//открываем попап добавления фото
-closeAddBtn.addEventListener('click', () => modifyPopup(addForm));//закрываем попап добавления фото
+function bigImage(element) {
+  modifyPopup(popupCardView);
+  const image = popupCardView.querySelector('.popup__image');
+  const caption = popupCardView.querySelector('.popup__card-title');
 
-
-const editBtn = document.querySelector('.profile__edit-btn');//нашли кнопку редактирования профиля
-const editForm = document.querySelector('.popup_type_edit-profile')//нашли форму редактирования
-const closeEditBtn = editForm.querySelector('.popup__close-btn_edit-form')//нашли кнопку закрытия формы редактирования
-editBtn.addEventListener('click', () => {modifyPopup(editForm); fillInputEdit()});//как добавить вторую функцию?
-closeEditBtn.addEventListener('click', () => modifyPopup(editForm));
-
-//собрали данные для первичного заполнения формы - вынести константы для другой функции
-const nameValue = document.querySelector('.profile__name');
-const nameInput = editForm.querySelector('.popup__input_type_name');
-
-const jobValue = document.querySelector('.profile__about');
-const jobInput = editForm.querySelector('.popup__input_type_job');
-
+  image.src = element.src;
+  image.alt = element.alt;
+  caption.textContent = element.alt;
+}
 
 function fillInputEdit () {
   nameInput.value = nameValue.textContent;
   jobInput.value = jobValue.textContent;
 }
 
-//фунция для кнопки сохранить формы изменения профиля
 function formSubmitHandler (evt) {
   evt.preventDefault();
   nameValue.textContent = nameInput.value;
   jobValue.textContent = jobInput.value;
   modifyPopup(editForm);
 }
-
-//добавляем обработчик формы
-editForm.addEventListener('submit', formSubmitHandler);
 
 function addFormSubmitHandler(evt) {
   evt.preventDefault();
@@ -133,7 +107,14 @@ function addFormSubmitHandler(evt) {
   modifyPopup(addForm);
 }
 
-const addBtn = addForm.querySelector('.popup__submit-btn_type_add-form')
-addBtn.addEventListener('click', addFormSubmitHandler);
+initialCards.forEach(item => addCard(item.name, item.link));
 
+addButton.addEventListener('click', () => modifyPopup(addForm));
+closeAddBtn.addEventListener('click', () => modifyPopup(addForm));
+addForm.addEventListener('submit', addFormSubmitHandler);
 
+editBtn.addEventListener('click', () => {modifyPopup(editForm); fillInputEdit()});
+closeEditBtn.addEventListener('click', () => modifyPopup(editForm));
+editForm.addEventListener('submit', formSubmitHandler);
+
+closeImageBtn.addEventListener('click', () => modifyPopup(popupCardView));

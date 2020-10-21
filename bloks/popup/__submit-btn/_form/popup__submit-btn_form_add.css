@@ -1,0 +1,10 @@
+.popup__submit-btn_form_add {
+  margin-top: 48px;
+}
+
+@media screen and (max-width: 665px) {
+  .popup__submit-btn_form_add {
+    margin-top: 36px;
+    height: 40px;
+  }
+}
