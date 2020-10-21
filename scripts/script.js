@@ -59,7 +59,7 @@ function addCard(name, link) {
   const likeBtn = cardElement.querySelector('.element__like-btn');
   likeBtn.addEventListener('click', (evt) => likeCard(evt.target));
 
-  cardImage.addEventListener('click', (evt) => bigImage(evt.target));
+  cardImage.addEventListener('click', (evt) => getBigImage(evt.target));
 
   photoContainer.prepend(cardElement);
 }
@@ -77,7 +77,7 @@ function modifyPopup(form) {
   form.classList.toggle('popup_visible');
 }
 
-function bigImage(element) {
+function getBigImage(element) {
   modifyPopup(popupCardView);
   const image = popupCardView.querySelector('.popup__image');
   const caption = popupCardView.querySelector('.popup__card-title');
