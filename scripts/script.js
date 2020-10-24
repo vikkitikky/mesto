@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 const popupCardView = document.querySelector('.popup_type_card-view');
 const addForm = document.querySelector('.popup_type_add-img');
 const editForm = document.querySelector('.popup_type_edit-profile');
@@ -42,16 +15,17 @@ const jobValue = document.querySelector('.profile__about');
 const nameInput = editForm.querySelector('.popup__input_type_name');
 const jobInput = editForm.querySelector('.popup__input_type_job');
 
-function addCard(name, link) {
-  const photoContainer = document.querySelector('.photo');
-  const cardTemlplate = document.querySelector('#photo-template').content;
+const photoContainer = document.querySelector('.photo');
+const cardTemlplate = document.querySelector('#photo-template').content;
+
+function getCard(data) {
   const cardElement = cardTemlplate.cloneNode(true);
   const cardTitle = cardElement.querySelector('.element__title');
   const cardImage = cardElement.querySelector('.element__img');
 
-  cardTitle.textContent = name;
-  cardImage.src = link;
-  cardImage.alt = name;
+  cardTitle.textContent = data.name;
+  cardImage.src = data.link;
+  cardImage.alt = data.name;
 
   const deleteBtn = cardElement.querySelector('.element__delete-btn');
   deleteBtn.addEventListener('click', (evt) => deleteCardItem(evt.target));
@@ -59,9 +33,13 @@ function addCard(name, link) {
   const likeBtn = cardElement.querySelector('.element__like-btn');
   likeBtn.addEventListener('click', (evt) => likeCard(evt.target));
 
-  cardImage.addEventListener('click', (evt) => getBigImage(evt.target));
+  cardImage.addEventListener('click', () => getBigImage(data));
 
-  photoContainer.prepend(cardElement);
+  return cardElement;
+}
+
+function renderCard(data) {
+  photoContainer.prepend(getCard(data));
 }
 
 function deleteCardItem(button) {
@@ -77,14 +55,14 @@ function modifyPopup(form) {
   form.classList.toggle('popup_visible');
 }
 
-function getBigImage(element) {
+function getBigImage(data) {
   modifyPopup(popupCardView);
   const image = popupCardView.querySelector('.popup__image');
   const caption = popupCardView.querySelector('.popup__card-title');
 
-  image.src = element.src;
-  image.alt = element.alt;
-  caption.textContent = element.alt;
+  image.src = data.link;
+  image.alt = data.name;
+  caption.textContent = data.name;
 }
 
 function fillInputEdit () {
@@ -92,7 +70,7 @@ function fillInputEdit () {
   jobInput.value = jobValue.textContent;
 }
 
-function formSubmitHandler (evt) {
+function editSubmitHandler (evt) {
   evt.preventDefault();
   nameValue.textContent = nameInput.value;
   jobValue.textContent = jobInput.value;
@@ -101,13 +79,16 @@ function formSubmitHandler (evt) {
 
 function addFormSubmitHandler(evt) {
   evt.preventDefault();
-  const titleValue = addForm.querySelector('.popup__input_type_title').value;
-  const srcValue = addForm.querySelector('.popup__input_type_src').value;
-  addCard(titleValue, srcValue);
+  const cardUser = {};
+  cardUser.name = addForm.querySelector('.popup__input_type_title').value;
+  cardUser.link = addForm.querySelector('.popup__input_type_src').value;
+  renderCard(cardUser);
   modifyPopup(addForm);
+  addForm.querySelector('.popup__form').reset();
 }
 
-initialCards.forEach(item => addCard(item.name, item.link));
+const prepareCard = initialCards.map(card => getCard(card));
+photoContainer.prepend(...prepareCard);
 
 addButton.addEventListener('click', () => modifyPopup(addForm));
 closeAddBtn.addEventListener('click', () => modifyPopup(addForm));
@@ -115,6 +96,6 @@ addForm.addEventListener('submit', addFormSubmitHandler);
 
 editBtn.addEventListener('click', () => {modifyPopup(editForm); fillInputEdit()});
 closeEditBtn.addEventListener('click', () => modifyPopup(editForm));
-editForm.addEventListener('submit', formSubmitHandler);
+editForm.addEventListener('submit', editSubmitHandler);
 
 closeImageBtn.addEventListener('click', () => modifyPopup(popupCardView));
