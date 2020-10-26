@@ -11,7 +11,7 @@
   height: 50px;
 }
 
-.popup__submit-btn:hover {
+.popup__submit-btn:not(.popup__submit-btn_inactive):hover {
   background-color: rgba(0, 0, 0, .8);
   cursor: pointer;
   font-size: 18px;
