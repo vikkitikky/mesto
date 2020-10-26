@@ -35,6 +35,7 @@
 @import url(../bloks/popup/__input/_type/popup__input_type_src.css);
 @import url(../bloks/popup/__input/_type/popup__input_type_title.css);
 @import url(../bloks/popup/__submit-btn/popup__submit-btn.css);
+@import url(../bloks/popup/__submit-btn/_inactive);
 @import url(../bloks/popup/__submit-btn/_form/popup__submit-btn_form_add.css);
 @import url(../bloks/popup/__submit-btn/_form/popup__submit-btn_form_edit.css);
 @import url(../bloks/popup/__image/popup__image.css);

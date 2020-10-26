@@ -35,9 +35,9 @@
         <form class="popup__form popup__form_type_edit" name="edit-form">
           <button type="reset" class="popup__close-btn popup__close-btn_form_edit"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <input name="name" class="popup__input popup__input_type_name" placeholder="Имя" required maxlength="40">
-          <input name="job" class="popup__input popup__input_type_job" placeholder="О себе" required maxlength="40">
-          <button type="submit" class="popup__submit-btn popup__submit-btn_form_edit">Сохранить</button>
+          <input name="name"  class="popup__input popup__input_type_name" placeholder="Имя" required minlength="2" maxlength="40">
+          <input name="job" class="popup__input popup__input_type_job" placeholder="О себе" required minlength="2" maxlength="200">
+          <button type="submit" class="popup__submit-btn popup__submit-btn_inactive popup__submit-btn_form_edit">Сохранить</button>
         </form>
       </section>
 
@@ -45,8 +45,8 @@
         <form class="popup__form popup__form_type_add" name="edit-form">
           <button type="reset" class="popup__close-btn popup__close-btn_form_add"></button>
           <h3 class="popup__title">Новое место</h3>
-          <input name="title" class="popup__input popup__input_type_title" placeholder="Название" required>
-          <input name="src" class="popup__input popup__input_type_src" placeholder="Ссылка на картинку" required>
+          <input name="title" class="popup__input popup__input_type_title" placeholder="Название" required minlength="2" maxlength="30">
+          <input name="src" type="url" class="popup__input popup__input_type_src" placeholder="Ссылка на картинку" required>
           <button type="submit" class="popup__submit-btn popup__submit-btn_form_add">Создать</button>
         </form>
       </section>
