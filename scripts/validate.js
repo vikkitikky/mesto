@@ -11,14 +11,14 @@ function showInputError (formElement, inputElement) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   errorElement.classList.add(formObject.errorClass);
   errorElement.textContent = inputElement.validationMessage;
-  inputElement.classList.add(formObject.errorClass);
+  inputElement.classList.add(formObject.inputErrorClass);
 }
 
 function hideInputError (formElement, inputElement) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   errorElement.classList.remove(formObject.errorClass);
   errorElement.textContent = '';
-  inputElement.classList.remove(formObject.errorClass);
+  inputElement.classList.remove(formObject.inputErrorClass);
 }
 
 function checkInputValidation (inputElement, formElement) {

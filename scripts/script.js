@@ -5,6 +5,10 @@ const editForm = document.querySelector('.popup_type_edit-profile');
 const addButton = document.querySelector('.profile__add-btn');
 const editBtn = document.querySelector('.profile__edit-btn');
 
+const closeAddBtn = addForm.querySelector('.popup__close-btn');
+const closeEditBtn = editForm.querySelector('.popup__close-btn');
+const closeImageBtn = popupCardView.querySelector('.popup__close-btn');
+
 const nameValue = document.querySelector('.profile__name');
 const jobValue = document.querySelector('.profile__about');
 
@@ -13,17 +17,6 @@ const jobInput = editForm.querySelector('.popup__input_type_job');
 
 const photoContainer = document.querySelector('.photo');
 const cardTemlplate = document.querySelector('#photo-template').content;
-
-const closeButton = Array.from(document.querySelectorAll('.popup__close-btn'));
-
-const popupOverlay = Array.from(document.querySelectorAll('.popup'));
-
-popupOverlay.forEach((element) => element.addEventListener('mousedown', (evt) => modifyPopup(evt.target)));
-
-closeButton.forEach((button) => {
-  button.addEventListener('click', () => {
-    modifyPopup(button.closest('.popup'))})
-})
 
 function getCard(data) {
   const cardElement = cardTemlplate.cloneNode(true);
@@ -34,18 +27,19 @@ function getCard(data) {
   cardImage.src = data.link;
   cardImage.alt = data.name;
 
+  const deleteBtn = cardElement.querySelector('.element__delete-btn');
+  deleteBtn.addEventListener('click', (evt) => deleteCardItem(evt.target));
+
+  const likeBtn = cardElement.querySelector('.element__like-btn');
+  likeBtn.addEventListener('click', (evt) => likeCard(evt.target));
+
+  cardImage.addEventListener('click', () => getBigImage(data));
+
   return cardElement;
 }
 
 function renderCard(data) {
   photoContainer.prepend(getCard(data));
-}
-
-const prepareCard = initialCards.map(card => getCard(card));
-photoContainer.prepend(...prepareCard);
-
-function modifyPopup(form) {
-  form.classList.toggle('popup_visible');
 }
 
 function deleteCardItem(button) {
@@ -57,26 +51,18 @@ function likeCard(button) {
   button.classList.toggle('element__like-btn_active');
 }
 
+function modifyPopup(form) {
+  form.classList.toggle('popup_visible');
+}
+
 function getBigImage(data) {
+  modifyPopup(popupCardView);
   const image = popupCardView.querySelector('.popup__image');
   const caption = popupCardView.querySelector('.popup__card-title');
 
-  image.src = data.src;
-  image.alt = data.alt;
-  caption.textContent = data.alt;
-}
-
-function chooseAction (element) {
-  if (element.classList.contains('element__like-btn')) {
-    likeCard(element);
-  }
-  if (element.classList.contains('element__delete-btn')) {
-    deleteCardItem(element);
-  }
-  if (element.classList.contains('element__img')) {
-    modifyPopup(popupCardView);
-    getBigImage(element);
-  }
+  image.src = data.link;
+  image.alt = data.name;
+  caption.textContent = data.name;
 }
 
 function fillInputEdit () {
@@ -101,17 +87,32 @@ function addFormSubmitHandler(evt) {
   addForm.querySelector('.popup__form').reset();
 }
 
-addButton.addEventListener('click', () => modifyPopup(addForm));
-addForm.addEventListener('submit', addFormSubmitHandler);
-addForm.addEventListener('keydown', (evt) => {
-  if (evt.key === "Esc") {
-    modifyPopup(addForm);
-  }
-})
+function resetError (form, inputList) {
+  inputList.forEach((inputElement) => {
+    hideInputError(form, inputElement);
+  })
+}
 
-editBtn.addEventListener('click', () => {modifyPopup(editForm); fillInputEdit()});
+function initialForm(form) {
+  const inputList = Array.from(form.querySelectorAll('.popup__input'));
+  const button = form.querySelector('.popup__submit-btn')
+  modifyPopup(form);
+  resetError (form, inputList);
+  toggleButtonState(inputList, button)
+}
+
+const prepareCard = initialCards.map(card => getCard(card));
+photoContainer.prepend(...prepareCard);
+
+addButton.addEventListener('click', () => initialForm(addForm));
+closeAddBtn.addEventListener('click', () => modifyPopup(addForm))
+addForm.addEventListener('submit', addFormSubmitHandler);
+
+editBtn.addEventListener('click', () => {
+  initialForm(editForm); 
+  fillInputEdit();
+});
+closeEditBtn.addEventListener('click', () => modifyPopup(editForm));
 editForm.addEventListener('submit', editSubmitHandler);
 
-photoContainer.addEventListener('click', (evt) => {
-  chooseAction(evt.target);
-})
+closeImageBtn.addEventListener('click', () => modifyPopup(popupCardView));
