@@ -4,19 +4,17 @@ const formObject = {
   submitButtonSelector: '.popup__submit-btn',
   inactiveButtonClass: 'popup__submit-btn_inactive',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+  errorClass: 'popup__error'
 }
 
 function showInputError (formElement, inputElement) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  errorElement.classList.add(formObject.errorClass);
   errorElement.textContent = inputElement.validationMessage;
   inputElement.classList.add(formObject.inputErrorClass);
 }
 
 function hideInputError (formElement, inputElement) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
-  errorElement.classList.remove(formObject.errorClass);
   errorElement.textContent = '';
   inputElement.classList.remove(formObject.inputErrorClass);
 }
