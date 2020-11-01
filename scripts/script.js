@@ -4,7 +4,12 @@ const cardTemlplate = document.querySelector('#photo-template').content;
 const popupList = Array.from(document.querySelectorAll('.popup'));
 const editFormPopup = document.querySelector('.popup_type_edit-profile');
 const addFormPopup = document.querySelector('.popup_type_add-img');
+const titleInput = addFormPopup.querySelector('.popup__input_type_title');
+const linkInput = addFormPopup.querySelector('.popup__input_type_src');
+
 const popupCardView = document.querySelector('.popup_type_card-view');
+const image = popupCardView.querySelector('.popup__image');
+const caption = popupCardView.querySelector('.popup__card-title');
 
 const editBtn = document.querySelector('.profile__edit-btn');
 const addBtn = document.querySelector('.profile__add-btn');
@@ -28,7 +33,7 @@ function getCard(data) {
   return cardElement;
 }
 
-function renderCard(data) {
+function renderCards(data) {
   photoContainer.prepend(getCard(data));
 }
 
@@ -46,8 +51,6 @@ function likeCard(button) {
 
 function getBigImage(data) {
   modifyPopup(popupCardView);
-  const image = popupCardView.querySelector('.popup__image');
-  const caption = popupCardView.querySelector('.popup__card-title');
 
   image.src = data.src;
   image.alt = data.alt;
@@ -67,24 +70,28 @@ function selectAction (target) {
 }
 //открытие/закрытие форм, функции отправки форм, заполнение форм исходными данными, отмена стандартной
 //отправки происходит в validate.js, там же находятся функции скрытия ошибок и переключатель кнопки submit
-function modifyPopup(form) {
-  form.classList.toggle('popup_visible');
+function modifyPopup(popup) {
+  popup.classList.toggle('popup_visible');
+  if (popup.classList.contains('popup_visible')) {
+    document.addEventListener('keydown', (evt) => closePopupEsc(evt));
+  }
+  document.removeEventListener('keydown', (evt)=> closePopupEsc(evt));
 }
 
-function editSubmitHandler (form) {
+function editSubmitHandler () {
   nameValue.textContent = nameInput.value;
   jobValue.textContent = jobInput.value;
-  modifyPopup(form);
-  form.querySelector('.popup__form').reset();
+  modifyPopup(editFormPopup);
+  editFormPopup.querySelector('.popup__form').reset();
 }
 
-function addFormSubmitHandler(form) {
+function addFormSubmitHandler() {
   const cardUser = {};
-  cardUser.name = form.querySelector('.popup__input_type_title').value;
-  cardUser.link = form.querySelector('.popup__input_type_src').value;
-  renderCard(cardUser);
-  modifyPopup(form);
-  form.querySelector('.popup__form').reset();
+  cardUser.name = titleInput.value;
+  cardUser.link = linkInput.value;
+  renderCards(cardUser);
+  modifyPopup(addFormPopup);
+  addFormPopup.querySelector('.popup__form').reset();
 }
 
 function fillInputEdit () {
@@ -105,17 +112,18 @@ function initialForm(form) {
   resetError (form, inputList);
   toggleButtonState(inputList, button);
 }
-//добавлять на весь документ
-function closePopupEsc (form, evt) {
-  if (evt.key === 'Escape' && form.classList.contains('popup_visible')) {
-    modifyPopup(form);
+
+function closePopupEsc (evt) {
+  const openedPopup = document.querySelector('.popup_visible')
+  if (evt.key === 'Escape' && openedPopup) {
+    modifyPopup(openedPopup);
   }
 }
 
-function closePopupBtn (form) {
-  const closeBtn = form.querySelector('.popup__close-btn');
+function closePopupBtn (popup) {
+  const closeBtn = popup.querySelector('.popup__close-btn');
   closeBtn.addEventListener('click', () => {
-    modifyPopup(form);
+    modifyPopup(popup);
   });
 }
 
@@ -125,7 +133,6 @@ function addListenerForPopup (popupElement) {
     modifyPopup(popupElement)
     }
   });
-  document.addEventListener('keydown', (evt) => closePopupEsc(popupElement, evt));
   closePopupBtn(popupElement);
 }
 
@@ -134,9 +141,11 @@ editBtn.addEventListener('click', () => {
   initialForm(editFormPopup);
   fillInputEdit();
 });
-editFormPopup.addEventListener('submit', () => editSubmitHandler(editFormPopup));
+editFormPopup.addEventListener('submit', () => editSubmitHandler());
 
-popupList.forEach((popupElement) => addListenerForPopup(popupElement))
+popupList.forEach((popupElement) => addListenerForPopup(popupElement));
+
 addBtn.addEventListener('click', () => initialForm(addFormPopup));
-addFormPopup.addEventListener('submit', () => addFormSubmitHandler(addFormPopup));
+addFormPopup.addEventListener('submit', () => addFormSubmitHandler());
+
 photoContainer.addEventListener('click', (evt) => selectAction(evt.target));
