@@ -20,6 +20,12 @@ const jobValue = document.querySelector('.profile__about');
 const nameInput = editFormPopup.querySelector('.popup__input_type_name');
 const jobInput = editFormPopup.querySelector('.popup__input_type_job');
 
+const elementsOfInvalidForm = {
+  inputErrorClass: 'popup__input_type_error', 
+  errorClass: 'popup__error_visible',
+  inactiveButtonClass: 'popup__submit-btn_inactive'
+}
+
 //добаление карточки, рендер карточки, описание действий всех интерактивных элементов карточки
 function getCard(data) {
   const cardElement = cardTemlplate.cloneNode(true);
@@ -73,9 +79,10 @@ function selectAction (target) {
 function modifyPopup(popup) {
   popup.classList.toggle('popup_visible');
   if (popup.classList.contains('popup_visible')) {
-    document.addEventListener('keydown', (evt) => closePopupEsc(evt));
+    document.addEventListener('keydown', closePopupEsc);
+  } else {
+  document.removeEventListener('keydown', closePopupEsc);
   }
-  document.removeEventListener('keydown', (evt)=> closePopupEsc(evt));
 }
 
 function editSubmitHandler () {
@@ -99,9 +106,9 @@ function fillInputEdit () {
   jobInput.value = jobValue.textContent;
 }
 
-function resetError (form, inputList) {
+function resetError (form, inputList, objParams) {
   inputList.forEach((inputElement) => {
-    hideInputError(form, inputElement);
+    hideInputError(form, inputElement, objParams);
   })
 }
 
@@ -109,8 +116,8 @@ function initialForm(form) {
   const inputList = Array.from(form.querySelectorAll('.popup__input'));
   const button = form.querySelector('.popup__submit-btn')
   modifyPopup(form);
-  resetError (form, inputList);
-  toggleButtonState(inputList, button);
+  resetError (form, inputList, elementsOfInvalidForm);
+  toggleButtonState(inputList, button, elementsOfInvalidForm);
 }
 
 function closePopupEsc (evt) {
