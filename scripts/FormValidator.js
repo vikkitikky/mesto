@@ -1,7 +1,7 @@
 export class FormValidator {
-  constructor(objParams, formElementSelector) {
+  constructor(objParams, formElement) {
     this._objParams = objParams;
-    this._formElement = document.querySelector(formElementSelector);
+    this._formElement = formElement;
   }
 //функция-рендер ошибок
   _showInputError(formElement, inputElement, objParams) {
@@ -55,7 +55,7 @@ export class FormValidator {
       })
     })
   }
-//отмена стандартной отправки формы
+
   enableValidation() {
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
