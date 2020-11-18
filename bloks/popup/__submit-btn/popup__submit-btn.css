@@ -11,9 +11,16 @@
   height: 50px;
 }
 
-.popup__submit-btn:not(.popup__submit-btn_inactive):hover {
+.popup__submit-btn:not(:disabled):hover {
   background-color: rgba(0, 0, 0, .8);
   cursor: pointer;
+}
+
+.popup__submit-btn:disabled {
+  background-color: transparent;
+  border: 1px solid #000;
+  color: #000;
+  opacity: .2;
 }
 
 @media screen and (max-width: 665px) {
