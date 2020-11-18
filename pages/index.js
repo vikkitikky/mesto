@@ -1,8 +1,8 @@
-import {initialCards} from "./cadsData.js";
-import {FormValidator} from "./FormValidator.js";
-import {Card} from "./Cards.js";
-import {Popup} from "./Popup.js";
-import {PopupWithForm} from "./PopupWithForm.js";
+import {initialCards} from "../scripts/cadsData.js";
+import {FormValidator} from "../scripts/FormValidator.js";
+import {Card} from "../scripts/Card.js";
+import {Popup} from "../scripts/Popup.js";
+import {PopupWithForm} from "../scripts/PopupWithForm.js";
 
 const photoContainer = document.querySelector('.photo');
 
@@ -35,10 +35,18 @@ function renderCard(data) {
   return readyCard;
 }
 
+const cardsList = initialCards.map((item) => renderCard(item));
+photoContainer.prepend(...cardsList);
+
 function getDataForBigCard(evt) {
   popupImage.src = evt.target.src;
   popupImage.alt = evt.target.alt;
   popupCaption.textContent = evt.target.alt;
+}
+
+function fillEditForm() {
+  inputName.value = profileName.textContent;
+  inputAbout.value = profileAbout.textContent;
 }
 
 function submitFormEdit() {
@@ -57,19 +65,10 @@ function submitFormAdd() {
   addForm.reset();
 }
 
-function fillEditForm() {
-  inputName.value = profileName.textContent;
-  inputAbout.value = profileAbout.textContent;
-}
-
-const cardsList = initialCards.map((item) => renderCard(item));
-photoContainer.prepend(...cardsList);
-
 const editValidator = new FormValidator({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit-btn',
-  inactiveButtonClass: 'popup__submit-btn_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 }, editForm);
@@ -78,7 +77,6 @@ const addValidator = new FormValidator({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit-btn',
-  inactiveButtonClass: 'popup__submit-btn_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 }, addForm);
@@ -86,10 +84,10 @@ const addValidator = new FormValidator({
 editValidator.enableValidation();
 addValidator.enableValidation();
 
+editForm.addEventListener('submit', submitFormEdit);
+addForm.addEventListener('submit', submitFormAdd);
 
-addForm.addEventListener('submit', submitFormAdd)
-
-const popupEdit = new Popup(popupWithEditForm);
+const popupEdit = new PopupWithForm(popupWithEditForm);
 popupEdit.setEventListener();
 editButton.addEventListener('click', () => {
   fillEditForm();
@@ -102,3 +100,13 @@ popupAdd.setEventListener();
 addButton.addEventListener('click', () => {
   popupAdd.openPopup();
 })
+
+const popupCard = new Popup(popupWithImage);
+popupCard.setEventListener();
+
+photoContainer.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('element__img')) {
+    getDataForBigCard(evt);
+    popupCard.openPopup();
+  }
+});

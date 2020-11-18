@@ -24,11 +24,11 @@ export class Popup {
     this._closeButton = this._popup.querySelector('.popup__close-btn');
 
     this._closeButton.addEventListener('click', () => this._closePopup());
-    this._popup.addEventListener('click', ( evt) => {
+    this._popup.addEventListener('mousedown', ( evt) => {
       if(evt.target === evt.currentTarget) {
         this._closePopup();
       }
-    })
+    });
   }
 }
 
