@@ -54,8 +54,8 @@ export class Card {
     this._card = this._element.querySelector('.element__img');
 
     this._element.querySelector('.element__title').textContent = this._title;
-    this._element.querySelector('.element__img').alt = this._title;
-    this._element.querySelector('.element__img').src = this._image;
+    this._card.alt = this._title;
+    this._card.src = this._image;
 
     this._setEventListener(this._element, this._likeButton, this._deleteButton, this._card);
 
