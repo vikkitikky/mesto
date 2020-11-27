@@ -51,12 +51,17 @@ popupWithEditForm.setEventListener();
 popupWithAddImgForm.setEventListener();
 
 editButton.addEventListener('click', () => {
+  editFormValidator.resetValidation();//очистка формы при открытии, т.к. могло произойти закрытие некорректно
+                                      //заполненной формы, стандартный .reset() не скидывает классы и сообщения
   inputName.value = profileData.getUserInfo().name;
   inputAbout.value = profileData.getUserInfo().job;
   popupWithEditForm.open();
 });
 
-addButton.addEventListener('click', () => popupWithAddImgForm.open());
+addButton.addEventListener('click', () => {
+  addFormValidator.resetValidation();
+  popupWithAddImgForm.open();
+});
 
 addFormValidator.enableValidation();
 editFormValidator.enableValidation();

@@ -15,18 +15,18 @@ export class Card {
     return cardElement;
   }
 
-  _setLike(likeBtn) {
-    likeBtn.classList.toggle('element__like-btn_active');
+  _setLike() {
+    this._likeButton.classList.toggle('element__like-btn_active');
   }
 
-  _deleteCard(element) {
-    element.remove();
+  _deleteCard() {
+    this._element.remove();
   }
 
-  _setEventListener (element, likeBtn, deleteBtn, card) {
-    likeBtn.addEventListener('click', () => this._setLike(likeBtn));
-    deleteBtn.addEventListener('click', () => this._deleteCard(element));
-    card.addEventListener('click', () => this._handleCardClick(this._cardInfo));
+  _setEventListener () {
+    this._likeButton.addEventListener('click', () => this._setLike());
+    this._deleteButton.addEventListener('click', () => this._deleteCard());
+    this._card.addEventListener('click', () => this._handleCardClick(this._cardInfo));
   }
 
   generateCard() {
@@ -39,7 +39,7 @@ export class Card {
     this._card.alt = this._cardInfo.name;
     this._card.src = this._cardInfo.link;
 
-    this._setEventListener(this._element, this._likeButton, this._deleteButton, this._card);
+    this._setEventListener();
 
     return this._element;
   }
