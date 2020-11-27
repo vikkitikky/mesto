@@ -6,6 +6,7 @@ import PopupWithForm from "../scripts/PopupWithForm.js";
 import {FormValidator} from "../scripts/FormValidator.js";
 import objectParams from "../scripts/constants.js";
 import UserInfo from "../scripts/UserInfo.js";
+import './index.css';
 
 const addButton = document.querySelector('.profile__add-btn');
 const editButton = document.querySelector('.profile__edit-btn');
