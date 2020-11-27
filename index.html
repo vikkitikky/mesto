@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
     <title>MestoRussia</title>
   </head>
   <body class="page">
@@ -47,9 +46,9 @@
         <form class="popup__form popup__form_type_add" name="add-form" novalidate>
           <button type="button" class="popup__close-btn popup__close-btn_form_add"></button>
           <h3 class="popup__title">Новое место</h3>
-          <input name="title" id="add-title" class="popup__input popup__input_type_title" placeholder="Название" required minlength="2" maxlength="30">
+          <input name="name" id="add-title" class="popup__input popup__input_type_title" placeholder="Название" required minlength="2" maxlength="30">
           <span id="add-title-error" class="popup__error"></span>
-          <input name="src" id="add-url" type="url" class="popup__input popup__input_type_src" placeholder="Ссылка на картинку" required>
+          <input name="link" id="add-url" type="url" class="popup__input popup__input_type_src" placeholder="Ссылка на картинку" required>
           <span id="add-url-error" class="popup__error"></span>
           <button type="submit" class="popup__submit-btn popup__submit-btn_form_add">Создать</button>
         </form>
@@ -78,6 +77,5 @@
       </article>
     </template>
 
-    <script type="module" src="pages/index.js"></script>
   </body>
 </html>

@@ -25,9 +25,6 @@ export const initialCards = [
   }
 ];
 
-export const popupWithImage = document.querySelector('.popup_type_card-view');
-export const popupImage = popupWithImage.querySelector('.popup__image');
-export const popupCaption = popupWithImage.querySelector('.popup__card-title');
 export default {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',

@@ -1,122 +1,61 @@
+import Section from "../scripts/Section.js";
+import {initialCards} from "../scripts/constants.js";
 import {Card} from "../scripts/Card.js";
-import {
-  popupWithImage,
-  initialCards
-} from "../scripts/constants.js";
-import objectParams from "../scripts/constants.js";
-import {
-  openPopup,
-  closePopup
-} from "../scripts/utils.js";
+import PopupWithImage from "../scripts/PopupWithImage.js";
+import PopupWithForm from "../scripts/PopupWithForm.js";
 import {FormValidator} from "../scripts/FormValidator.js";
+import objectParams from "../scripts/constants.js";
+import UserInfo from "../scripts/UserInfo.js";
 
-const photoContainer = document.querySelector('.photo');
-
-const editButton = document.querySelector('.profile__edit-btn');
 const addButton = document.querySelector('.profile__add-btn');
+const editButton = document.querySelector('.profile__edit-btn');
+const addImageForm = document.querySelector('.popup__form_type_add');
+const editProfileForm = document.querySelector('.popup__form_type_edit');
+const inputName = editProfileForm.querySelector('.popup__input_type_name');
+const inputAbout = editProfileForm.querySelector('.popup__input_type_job');
 
-const popupEditForm = document.querySelector('.popup_type_edit-profile');
-const popupAddForm = document.querySelector('.popup_type_add-img');
-
-const editForm = popupEditForm.querySelector('.popup__form');
-const addForm = popupAddForm.querySelector('.popup__form');
-
-const inputName = editForm.querySelector('.popup__input_type_name');
-const inputAbout = editForm.querySelector('.popup__input_type_job');
-
-const inputSource = addForm.querySelector('.popup__input_type_src');
-const inputTitle = addForm.querySelector('.popup__input_type_title');
-
-const profileName = document.querySelector('.profile__name');
-const profileAbout = document.querySelector('.profile__about');
-
-const closeButtonsList = document.querySelectorAll('.popup__close-btn');
-
-const addFormValidator = new FormValidator(objectParams, addForm);
-const editFormValidator = new FormValidator(objectParams, editForm);
-
-
-function renderCard(data) {
-  const newCard = new Card(data, '#photo-template');
+function createNewCard(item) {
+  const newCard = new Card(item, {handleCardClick: (item) => bigCard.open(item)}, '#photo-template');
   const readyCard = newCard.generateCard();
 
-  return readyCard;
+  cardsSection.addItem(readyCard);
 }
 
-function fillEditForm() {
-  inputName.value = profileName.textContent;
-  inputAbout.value = profileAbout.textContent;
-}
+const profileData = new UserInfo({name: '.profile__name', job: '.profile__about'});
 
-function submitFormEdit() {
-  profileName.textContent = inputName.value;
-  profileAbout.textContent = inputAbout.value;
+const bigCard = new PopupWithImage('.popup_type_card-view');
 
-  closePopup(popupEditForm);
-}
+const cardsSection = new Section({items: initialCards, renderer: createNewCard}, '.photo');
 
-function submitFormAdd() {
-  const userCard = {};
-  userCard.name = inputTitle.value;
-  userCard.link = inputSource.value;
-  photoContainer.prepend(renderCard(userCard));
+const popupWithEditForm = new PopupWithForm('.popup_type_edit-profile', {submittingForm: (item) => {
+    profileData.setUserInfo(item);
+    popupWithEditForm.close();
+  }
+});
 
-  closePopup(popupAddForm);
-}
+const popupWithAddImgForm = new PopupWithForm('.popup_type_add-img', {
+  submittingForm: (item) => {
+    createNewCard(item);
+    popupWithAddImgForm.close();
+  }
+});
 
-function resetForm(form) {
-  const errorMessages = form.querySelectorAll('.popup__error');
-  errorMessages.forEach(message => {
-    message.textContent = ''
-  });
-  const inputList = form.querySelectorAll('.popup__input');
-   inputList.forEach(input => {
-     input.classList.remove('popup__input_type_error');
-   });
-  const submitButton = form.querySelector('.popup__submit-btn');
-  submitButton.setAttribute('disabled', true);
-  form.reset();
-}
+const addFormValidator = new FormValidator(objectParams, addImageForm);
+const editFormValidator = new FormValidator(objectParams, editProfileForm);
 
+cardsSection.renderItems();
 
-const cardsList = initialCards.map((item) => renderCard(item));
-photoContainer.prepend(...cardsList);
+bigCard.setEventListener();
+popupWithEditForm.setEventListener();
+popupWithAddImgForm.setEventListener();
 
 editButton.addEventListener('click', () => {
-  openPopup(popupEditForm);
-  resetForm(editForm);
-  fillEditForm();
+  inputName.value = profileData.getUserInfo().name;
+  inputAbout.value = profileData.getUserInfo().job;
+  popupWithEditForm.open();
 });
 
-addButton.addEventListener('click', () => {
-  openPopup(popupAddForm);
-  resetForm(addForm);
-});
+addButton.addEventListener('click', () => popupWithAddImgForm.open());
 
-popupAddForm.addEventListener('click', evt => {
-  if(evt.target === evt.currentTarget) {
-    closePopup(popupAddForm);
-  }
-})
-
-popupEditForm.addEventListener('mousedown', evt => {
-  if(evt.target === evt.currentTarget) {
-    closePopup(popupEditForm);
-  }
-})
-
-popupWithImage.addEventListener('click', evt => {
-  if(evt.target === evt.currentTarget) {
-    closePopup(popupWithImage);
-  }
-})
-
-Array.from(closeButtonsList).forEach(button => {
-  button.addEventListener('click', () => closePopup(button.closest('.popup')))
-})
-
-editFormValidator.enableValidation();
 addFormValidator.enableValidation();
-
-editForm.addEventListener('submit', submitFormEdit);
-addForm.addEventListener('submit', submitFormAdd);
+editFormValidator.enableValidation();
