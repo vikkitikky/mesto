@@ -8,3 +8,10 @@
   text-overflow: ellipsis;
   outline: none;
 }
+
+@media screen and (max-width: 665px) {
+  .popup__input {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
