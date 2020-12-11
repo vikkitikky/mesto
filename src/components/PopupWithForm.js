@@ -19,7 +19,7 @@ export default class PopupWithForm extends Popup {
 
   close() {
     super.close();
-    this._form.reset();//по ТЗ должно быть здесь, но я бы унесла в валидатор
+    this._form.reset();
   }
 
   setEventListener() {
