@@ -14,11 +14,12 @@
     <main class="content">
 
       <section class="profile">
-        <img class="profile__avatar" src="<%=require('./image/avatar.jpg')%>" alt="Аватар">
+        <img class="profile__avatar" src="https://i.gifer.com/9u1B.gif" alt="Аватар">
+        <div class="profile__edit-avatar"></div>
         <div class="profile__info">
           <div>
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <p class="profile__about">Исследователь океана</p>
+            <h1 class="profile__name">...</h1>
+            <p class="profile__about">...</p>
           </div>
           <button type="button" class="profile__edit-btn"></button>
         </div>
@@ -30,13 +31,23 @@
       </section>
 
 
+      <section class="popup popup_type_edit-avatar">
+        <form class="popup__form popup__form_type_edit-avatar" name="edit-avatar-form" novalidate>
+          <button type="button" class="popup__close-btn popup__close-btn_form_edit-avatar"></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <input name="avatar" id="edit-avatar" type="url" class="popup__input popup__input_type_avatar" required>
+          <span id="edit-avatar-error" class="popup__error"></span>
+          <button type="submit" class="popup__submit-btn popup__submit-btn_form_edit-avatar">Сохранить</button>
+        </form>
+      </section>
+
       <section class="popup popup_type_edit-profile">
         <form class="popup__form popup__form_type_edit" name="edit-form" novalidate>
           <button type="button" class="popup__close-btn popup__close-btn_form_edit"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
           <input name="name" id="edit-name" class="popup__input popup__input_type_name" placeholder="Имя" required minlength="2" maxlength="40">
           <span id="edit-name-error" class="popup__error"></span>
-          <input name="job" id="edit-about" class="popup__input popup__input_type_job" placeholder="О себе" required minlength="2" maxlength="200">
+          <input name="about" id="edit-about" class="popup__input popup__input_type_job" placeholder="О себе" required minlength="2" maxlength="200">
           <span id="edit-about-error" class="popup__error"></span>
           <button type="submit" class="popup__submit-btn popup__submit-btn_form_edit">Сохранить</button>
         </form>
@@ -57,9 +68,17 @@
       <section class="popup popup_type_card-view">
         <div class="popup__card-view">
           <button type="button" class="popup__close-btn popup__close-btn_form_view"></button>
-          <img class="popup__image" src="#" alt="#">
+          <img class="popup__image" src="#" alt="">
           <h3 class="popup__card-title"></h3>
         </div>
+      </section>
+
+      <section class="popup popup_type_confirm">
+        <form class="popup__form popup__form_type_confirm" name="confirm-form" novalidate>
+          <button type="button" class="popup__close-btn popup__close-btn_form_confirm"></button>
+          <h3 class="popup__title">Вы уверены?</h3>
+          <button type="submit" class="popup__submit-btn popup__submit-btn_form_add">Да</button>
+        </form>
       </section>
 
   </main>
@@ -70,10 +89,13 @@
 
     <template id="photo-template">
       <article class="element">
-        <img class="element__img">
+        <img class="element__img" src="#" alt="">
         <button type="button" class="element__delete-btn"></button>
         <h2 class="element__title"></h2>
-        <button type="button" class="element__like-btn"></button>
+        <div class="element__like-group">
+          <button type="button" class="element__like-btn"></button>
+          <p class="element__like-count"></p>
+        </div>
       </article>
     </template>
 

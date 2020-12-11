@@ -1,9 +1,0 @@
-@media screen and (max-width: 665px) {
-  .popup__close-btn_form_add {
-    background-size: 100%;
-    width: 30px;
-    height: 30px;
-    top: -25px;
-    right: -25px;
-  }
-}

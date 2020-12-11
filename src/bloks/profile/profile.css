@@ -4,6 +4,7 @@
   grid-template: min-content/min-content auto minmax(50px, 150px);
   gap: 30px;
   align-items: center;
+  position: relative;
 }
 
 @media screen and (max-width: 665px) {
