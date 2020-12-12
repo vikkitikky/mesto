@@ -23,6 +23,9 @@ const addSubmitButton = addImageForm.querySelector('.popup__submit-btn');
 
 let userId = '';
 
+const setButtonText = (button, text) => {
+  button.textContent = text;
+}
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-18/',
@@ -30,17 +33,13 @@ const api = new Api({
     authorization: '3f1525c8-6553-40b2-a3fa-d91718e64979',
     'Content-Type': 'application/json'
   }
-})
+});
 
 const profileData = new UserInfo({
   name: '.profile__name',
   about: '.profile__about',
   avatar: '.profile__avatar'
 });
-
-const addImageValidator = new FormValidator(objectParams, addImageForm);
-const editProfileValidator = new FormValidator(objectParams, editProfileForm);
-const editAvatarValidator = new FormValidator(objectParams, editAvatarForm);
 
 const bigCard = new PopupWithImage('.popup_type_card-view');
 
@@ -57,16 +56,91 @@ const deleteSubmitPopup = new PopupWithSubmit('.popup_type_confirm', {
   }
 })
 
-const setButtonText = (button, text) => {
-  button.textContent = text;
+const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', {
+  submittingForm: (item) => {
+    setButtonText(avatarSubmitButton, 'Сохранение...');
+    api.editAvatar(item.avatar)
+      .then(() => {
+        profileData.setUserAvatar(item);
+        popupEditAvatar.close();
+      })
+      .catch((err) =>{
+        console.log(`Редактирование аватара. Ошибка: ${err}`)
+      })
+      .finally(() => setButtonText(avatarSubmitButton, 'Сохранить'))
+  }
+});
+
+const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
+  submittingForm: (item) => {
+    setButtonText(profileSubmitButton, 'Сохранение...');
+    api.editUserData(item)
+      .then(() => {
+        profileData.setUserInfo(item);
+        popupEditProfile.close();
+      })
+      .catch((err) =>{
+        console.log(`Редактирование профиля. Ошибка: ${err}`)
+      })
+      .finally(() => setButtonText(profileSubmitButton, 'Сохранить'))
+  }
+});
+
+const createCard = (item) => {
+  const newCard = new Card({
+      data: item,
+      handleCardClick: bigCard.open.bind(bigCard),
+      handleLikeClick: (init, item) => {
+        if (!init) {
+          api.setLike(item)
+            .then((res) => {
+              newCard.updateLikeCount(res.likes.length);
+              newCard.setLike()
+            })
+        } else {
+          api.removeLike(item)
+            .then((res) => {
+              newCard.updateLikeCount(res.likes.length);
+              newCard.removeLike();
+            })
+        }
+      },
+      handleDeleteIconClick: item => {
+        deleteSubmitPopup.open(item)
+      }
+    },
+    '#photo-template', userId);
+
+  return newCard.generateCard();
 }
 
-bigCard.setEventListener();
-deleteSubmitPopup.setEventListener();
-addImageValidator.enableValidation();
-editProfileValidator.enableValidation();
-editAvatarValidator.enableValidation();
+const section = new Section({
+  renderer: createCard
+}, '.photo');
 
+const popupAddCard = new PopupWithForm('.popup_type_add-img', {
+  submittingForm: (item) => {
+    setButtonText(addSubmitButton, 'Сохранение...');
+    api.addNewCard(item)
+      .then((res) => {
+        section.addItem(createCard(res));
+        popupAddCard.close()
+      })
+      .catch((err) => {
+        console.log(`Добавление карточки. Ошибка: ${err}`)
+      })
+      .finally(() => setButtonText(addSubmitButton, 'Создать'))
+  }
+})
+
+const addImageValidator = new FormValidator(objectParams, addImageForm);
+const editProfileValidator = new FormValidator(objectParams, editProfileForm);
+const editAvatarValidator = new FormValidator(objectParams, editAvatarForm);
+
+addButton.addEventListener('click', () => {
+  addImageValidator.resetValidation();
+  popupAddCard.open();
+})
 
 api.prepareDataForRender()
   .then(data => {
@@ -79,113 +153,36 @@ api.prepareDataForRender()
       return dateA - dateB
     });
 
-    const userProfile = new UserInfo({
-      name: '.profile__name',
-      about: '.profile__about',
-      avatar: '.profile__avatar'
-    });
-    userProfile.setUserInfo(userData);
-    userProfile.setUserAvatar(userData);
+    profileData.setUserAvatar(userData);
+    profileData.setUserInfo(userData);
 
-    const createCard = (item) => {
-      const newCard = new Card({
-        data: item,
-        handleCardClick: bigCard.open.bind(bigCard),
-        setLike: (item) => {
-          api.setLike(item)
-            .then(res => newCard.updateLikeCount(res.likes.length))
-            .catch((err) => console.log(`Не удалось обновить количество лайков. Ошибка ${err}`))
-        },
-        removeLike: (item) => {
-          api.removeLike(item)
-            .then(res => newCard.updateLikeCount(res.likes.length))
-            .catch((err) => console.log(`Не удалось обновить количество лайков. Ошибка ${err}`))
-        },
-        handleDeleteIconClick: item => {
-          deleteSubmitPopup.open(item)
-          }
-        },
-        '#photo-template', userId);
-
-    return newCard.generateCard();
-    }
-
-    const section = new Section({
-      items: initialCards,
-      renderer: createCard
-    }, '.photo');
-
-    section.renderItems();
-
-    const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', {
-      submittingForm: (item) => {
-        setButtonText(avatarSubmitButton, 'Сохранение...');
-        api.editAvatar(item.avatar)
-          .then(() => {
-            userProfile.setUserAvatar(item);
-            popupEditAvatar.close();
-          })
-          .catch((err) =>{
-            console.log(`Редактирование аватара. Ошибка: ${err}`)
-          })
-          .finally(() => setButtonText(avatarSubmitButton, 'Сохранить'))
-      }
-    });
-
-    popupEditAvatar.setEventListener();
-
-    const popupEditProfile = new PopupWithForm('.popup_type_edit-profile', {
-      submittingForm: (item) => {
-        setButtonText(profileSubmitButton, 'Сохранение...');
-        api.editUserData(item)
-          .then(() => {
-            profileData.setUserInfo(item);
-            popupEditProfile.close();
-          })
-          .catch((err) =>{
-            console.log(`Редактирование профиля. Ошибка: ${err}`)
-          })
-          .finally(() => setButtonText(profileSubmitButton, 'Сохранить'))
-      }
-    });
-
-    popupEditProfile.setEventListener();
-
-    const popupAddCard = new PopupWithForm('.popup_type_add-img', {
-      submittingForm: (item) => {
-        setButtonText(addSubmitButton, 'Сохранение...');
-        api.addNewCard(item)
-          .then((res) => {
-            section.addItem(createCard(res));
-            popupAddCard.close()
-          })
-          .catch((err) => {
-            console.log(`Добавление карточки. Ошибка: ${err}`)
-          })
-          .finally(() => setButtonText(addSubmitButton, 'Создать'))
-      }
-    })
-
-    popupAddCard.setEventListener();
-
-    avatarButton.addEventListener('click', () => {
-      editAvatarValidator.resetValidation();
-      popupEditAvatar.open();
-    });
-
-    editButton.addEventListener('click', () => {
-      editProfileValidator.resetValidation();
-      inputName.value = userProfile.getUserInfo().name;
-      inputAbout.value = userProfile.getUserInfo().about;
-      popupEditProfile.open();
-    })
-
-    addButton.addEventListener('click', () => {
-      addImageValidator.resetValidation();
-      popupAddCard.open();
-    })
+    section.renderItems(initialCards);
   })
-  .catch((err) => {
-    console.log(`Что-то пошло не так при загрузке данных. Ошибка ${err}`)
+  .catch(err => {
+    console.log(`Не получилось получить данные. ${err}`)
   })
+
+
+bigCard.setEventListener();
+deleteSubmitPopup.setEventListener();
+addImageValidator.enableValidation();
+editProfileValidator.enableValidation();
+editAvatarValidator.enableValidation();
+
+popupAddCard.setEventListener();
+popupEditAvatar.setEventListener();
+popupEditProfile.setEventListener();
+
+editButton.addEventListener('click', () => {
+  editProfileValidator.resetValidation();
+  inputName.value = profileData.getUserInfo().name;
+  inputAbout.value = profileData.getUserInfo().about;
+  popupEditProfile.open();
+})
+
+avatarButton.addEventListener('click', () => {
+  editAvatarValidator.resetValidation();
+  popupEditAvatar.open();
+});
+
 
